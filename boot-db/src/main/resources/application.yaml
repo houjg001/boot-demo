@@ -1,0 +1,19 @@
+spring.application.name: boot-db
+
+spring:
+  datasource:
+#    url: jdbc:h2:file:~/testdb
+#    username: sa
+#    password: sa
+#    driverClassName: org.h2.Driver
+    url: jdbc:mysql://localhost:3306/boot-db?
+    username: boot
+    password: boot
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+#    database-platform: org.hibernate.dialect.H2Dialect
+#  h2:
+#    console:
+#      path: /h2-console
+#      enabled: true

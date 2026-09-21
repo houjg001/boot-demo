@@ -1,0 +1,11 @@
+pluginManagement {
+    repositories {
+        maven {
+            url 'https://repo.huaweicloud.com/repository/maven/'
+            allowInsecureProtocol = true
+        }
+    }
+}
+rootProject.name = 'boot-demo'
+
+include 'boot-db'
