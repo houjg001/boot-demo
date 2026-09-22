@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.demo.db.mapper.UserMapper">
+    <resultMap id="UserDtoResult" type="org.example.demo.db.dto.UserDto">
+        <id column="user_id" jdbcType="BIGINT" property="userId" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <collection property="addresses" ofType="org.example.demo.db.dto.AddressDto">
+            <id column="address_id" jdbcType="BIGINT" property="addressId"/>
+            <result column="addr" jdbcType="VARCHAR" property="addr" />
+            <result column="postcode" jdbcType="VARCHAR" property="postcode" />
+        </collection>
+    </resultMap>
+
+    <select id="selectUserWithAddressByUserId" resultMap="UserDtoResult">
+        SELECT u.user_id,u.username,ad.address_id, ad.addr,ad.postcode
+        FROM t_users u
+        JOIN t_users_addresses ua ON u.user_id=ua.user_id
+        JOIN t_addresses ad ON ua.address_id=ad.address_id
+        WHERE u.user_id=#{userId}
+    </select>
+</mapper>

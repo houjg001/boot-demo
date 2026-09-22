@@ -2,16 +2,32 @@ package org.example.demo.db.entity;
 
 import java.time.LocalDateTime;
 
-public class Address {
+public class UserAddress {
+    private Long userAddressId;
+
+    private Long userId;
+
     private Long addressId;
-
-    private String addr;
-
-    private String postcode;
 
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
+
+    public Long getUserAddressId() {
+        return userAddressId;
+    }
+
+    public void setUserAddressId(Long userAddressId) {
+        this.userAddressId = userAddressId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public Long getAddressId() {
         return addressId;
@@ -19,22 +35,6 @@ public class Address {
 
     public void setAddressId(Long addressId) {
         this.addressId = addressId;
-    }
-
-    public String getAddr() {
-        return addr;
-    }
-
-    public void setAddr(String addr) {
-        this.addr = addr;
-    }
-
-    public String getPostcode() {
-        return postcode;
-    }
-
-    public void setPostcode(String postcode) {
-        this.postcode = postcode;
     }
 
     public LocalDateTime getCreateTime() {

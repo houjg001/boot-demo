@@ -1,6 +1,6 @@
 services:
   mysql-9:
-    image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/mysql:9.7.0
+    image: mysql:9.7.0
     container_name: mysql-local
     environment:
       TZ: "Asia/Shanghai"
