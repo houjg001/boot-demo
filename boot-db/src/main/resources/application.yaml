@@ -21,3 +21,7 @@ spring:
 mybatis:
   mapper-locations:
     - classpath*:/org/**/mapper/**/*.xml
+
+logging:
+  level:
+    org.example.demo.db.mapper: debug

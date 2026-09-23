@@ -5,11 +5,9 @@
     <id column="address_id" jdbcType="BIGINT" property="addressId" />
     <result column="addr" jdbcType="VARCHAR" property="addr" />
     <result column="postcode" jdbcType="VARCHAR" property="postcode" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    address_id, addr, postcode, create_time, update_time
+    address_id, addr, postcode
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -22,45 +20,31 @@
     where address_id = #{addressId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="org.example.demo.db.entity.Address">
-    insert into t_addresses (address_id, addr, postcode, 
-      create_time, update_time)
-    values (#{addressId,jdbcType=BIGINT}, #{addr,jdbcType=VARCHAR}, #{postcode,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    <selectKey keyProperty="addressId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_addresses (addr, postcode)
+    values (#{addr,jdbcType=VARCHAR}, #{postcode,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="org.example.demo.db.entity.Address">
+    <selectKey keyProperty="addressId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into t_addresses
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="addressId != null">
-        address_id,
-      </if>
       <if test="addr != null">
         addr,
       </if>
       <if test="postcode != null">
         postcode,
       </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="addressId != null">
-        #{addressId,jdbcType=BIGINT},
-      </if>
       <if test="addr != null">
         #{addr,jdbcType=VARCHAR},
       </if>
       <if test="postcode != null">
         #{postcode,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -73,21 +57,13 @@
       <if test="postcode != null">
         postcode = #{postcode,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
     </set>
     where address_id = #{addressId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="org.example.demo.db.entity.Address">
     update t_addresses
     set addr = #{addr,jdbcType=VARCHAR},
-      postcode = #{postcode,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      postcode = #{postcode,jdbcType=VARCHAR}
     where address_id = #{addressId,jdbcType=BIGINT}
   </update>
 </mapper>

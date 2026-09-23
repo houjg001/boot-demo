@@ -1,6 +1,6 @@
 package org.example.demo.db.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
+import java.io.Serializable;
 
 public interface BaseMapper<T> {
 
@@ -10,7 +10,7 @@ public interface BaseMapper<T> {
 
     int insertSelective(T row);
 
-    T selectByPrimaryKey(Long addressId);
+    T selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(T row);
 

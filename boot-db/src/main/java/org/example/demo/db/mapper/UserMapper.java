@@ -7,7 +7,7 @@ import org.example.demo.db.entity.User;
 import java.util.List;
 
 @Mapper
-public interface UserMapper extends BaseMapper<User>{
+public interface UserMapper extends BaseMapper<User> {
 
     List<UserDto> selectUserWithAddressByUserId(Long userId);
 }

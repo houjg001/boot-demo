@@ -8,6 +8,7 @@ public class UserDto {
     private Long userId;
     private String username;
     private LocalDate birthday;
+    private String email;
     List<AddressDto> addresses;
 
     public Long getUserId() {
@@ -34,41 +35,19 @@ public class UserDto {
         this.birthday = birthday;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public List<AddressDto> getAddresses() {
         return addresses;
     }
 
     public void setAddresses(List<AddressDto> addresses) {
         this.addresses = addresses;
-    }
-}
-
-class AddressDto {
-    private Long addressId;
-    private String addr;
-    private String postcode;
-
-    public Long getAddressId() {
-        return addressId;
-    }
-
-    public void setAddressId(Long addressId) {
-        this.addressId = addressId;
-    }
-
-    public String getAddr() {
-        return addr;
-    }
-
-    public void setAddr(String addr) {
-        this.addr = addr;
-    }
-
-    public String getPostcode() {
-        return postcode;
-    }
-
-    public void setPostcode(String postcode) {
-        this.postcode = postcode;
     }
 }
