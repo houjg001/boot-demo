@@ -55,17 +55,17 @@ public class BootDemoDBApplicationTest {
     void saveUserWithAddress() {
         String userJson = """
                 {
-                    "username": "宋依萍",
-                    "birthday": "1999-12-09",
-                    "email": "syp@icloud.com",
+                    "username": "刘五哥",
+                    "birthday": "1989-04-19",
+                    "email": "lwg@sohu.com",
                     "addresses": [
                         {
-                            "addr": "东城区和平路3号魔法小区4号楼2单元1109",
-                            "postcode": "110102"
+                            "addr": "开发区和平路3号魔法小区4号楼2单元1109",
+                            "postcode": "310102"
                         },
                         {
-                            "addr": "朝阳区磨坊村供销社",
-                            "postcode": "110003"
+                            
+                            "postcode": "310003"
                         }
                     ]
                 }

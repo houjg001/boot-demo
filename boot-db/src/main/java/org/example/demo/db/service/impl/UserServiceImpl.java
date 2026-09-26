@@ -35,7 +35,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
     @Override
     public PageInfo<UserDto> queryUsers() {
-        userMapper.selectByPrimaryKey(2L);
         PageHelper.startPage(1,10);
         List<UserDto> userDtoList = userMapper.selectUserWithAddressByUserId(2L);
         return new PageInfo<>(userDtoList);
