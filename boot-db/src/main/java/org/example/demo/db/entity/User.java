@@ -1,20 +1,15 @@
 package org.example.demo.db.entity;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class User {
     private Long userId;
 
-    private String username;
+    private String userName;
 
     private LocalDate birthday;
 
     private String email;
-
-    private LocalDateTime createTime;
-
-    private LocalDateTime updateTime;
 
     public Long getUserId() {
         return userId;
@@ -24,12 +19,12 @@ public class User {
         this.userId = userId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public LocalDate getBirthday() {
@@ -46,21 +41,5 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
     }
 }
