@@ -1,15 +1,15 @@
 package org.example.demo.db.service;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
-import org.example.demo.db.dto.UserDto;
+import org.example.demo.api.dto.UserDto;
 import org.example.demo.db.entity.User;
-import org.example.demo.db.mapper.UserMapper;
+
+import java.util.Map;
 
 public interface UserService extends BaseService<User> {
 
 
-    PageInfo<UserDto> queryUsers();
+    PageInfo<UserDto> queryUsers(Map<String,Object> param, int pageNum, int pageSize);
 
     User saveUserWithAddress(UserDto userDto);
 }

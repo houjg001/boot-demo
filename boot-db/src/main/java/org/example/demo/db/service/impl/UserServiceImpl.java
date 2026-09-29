@@ -2,15 +2,14 @@ package org.example.demo.db.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.example.demo.db.dto.AddressDto;
-import org.example.demo.db.dto.UserDto;
+import org.example.demo.api.dto.AddressDto;
+import org.example.demo.api.dto.UserDto;
 import org.example.demo.db.entity.Address;
 import org.example.demo.db.entity.User;
 import org.example.demo.db.entity.UserAddress;
 import org.example.demo.db.mapper.AddressMapper;
 import org.example.demo.db.mapper.UserAddressMapper;
 import org.example.demo.db.mapper.UserMapper;
-import org.example.demo.db.service.AddressService;
 import org.example.demo.db.service.UserService;
 import org.example.demo.db.utils.AddressMapstruct;
 import org.example.demo.db.utils.UserMapstruct;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements UserService {
@@ -32,11 +32,12 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         this.userAddressMapper = userAddressMapper;
     }
 
-
     @Override
-    public PageInfo<UserDto> queryUsers() {
-        PageHelper.startPage(1,10);
-        List<UserDto> userDtoList = userMapper.selectUserWithAddressByUserId(2L);
+    public PageInfo<UserDto> queryUsers(Map<String,Object> param, int pageNum, int pageSize) {
+        if (pageNum == 0) pageNum = 1;
+        if (pageSize == 0) pageSize = 10;
+        PageHelper.startPage(pageNum,pageSize);
+        List<UserDto> userDtoList = userMapper.queryUserByParam(param);
         return new PageInfo<>(userDtoList);
     }
 
