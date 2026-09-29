@@ -1,4 +1,4 @@
-package org.example.demo.api.dto.utils;
+package org.example.demo.api.utils;
 
 import com.google.protobuf.Timestamp;
 import org.example.demo.api.dto.UserDto;

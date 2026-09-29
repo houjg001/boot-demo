@@ -6,7 +6,9 @@
         <result column="user_name" jdbcType="VARCHAR" property="userName" />
         <result column="birthday" jdbcType="DATE" property="birthday" />
         <result column="email" jdbcType="VARCHAR" property="email" />
-        <collection property="addresses" ofType="org.example.demo.api.dto.AddressDto">
+        <collection property="addresses" ofType="org.example.demo.api.dto.AddressDto"
+                     select="org.example.demo.db.mapper.AddressMapper.queryAddressByUserId"
+                     column="user_id" fetchType="lazy">
             <id column="address_id" jdbcType="BIGINT" property="addressId"/>
             <result column="addr" jdbcType="VARCHAR" property="addr" />
             <result column="postcode" jdbcType="VARCHAR" property="postcode" />
@@ -22,19 +24,14 @@
     </select>
 
     <select id="queryUserByParam" resultMap="UserDtoResult" parameterType="hashmap">
-        SELECT u.user_id,u.user_name,u.birthday,u.email,ad.address_id, ad.addr,ad.postcode
+        SELECT u.user_id,u.user_name,u.birthday,u.email
         FROM t_users u
-        JOIN t_users_addresses ua ON u.user_id=ua.user_id
-        JOIN t_addresses ad ON ua.address_id=ad.address_id
         <trim prefix="WHERE" suffixOverrides="and">
             <if test="userName != null">
                 u.user_name = #{userName} and
             </if>
             <if test="email != null">
                 u.email = #{email} and
-            </if>
-            <if test="addr != null">
-                ad.addr like CONCAT('%', #{addr}, '%') and
             </if>
         </trim>
     </select>

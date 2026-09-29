@@ -1,7 +1,7 @@
 package org.example.web.rpc;
 
 import org.example.demo.api.dto.UserDto;
-import org.example.demo.api.dto.utils.UserProtoMapstruct;
+import org.example.demo.api.utils.UserProtoMapstruct;
 import org.example.grpc.service.UserIdReq;
 import org.example.grpc.service.UserInfo;
 import org.example.grpc.service.UserRpcServiceGrpc;

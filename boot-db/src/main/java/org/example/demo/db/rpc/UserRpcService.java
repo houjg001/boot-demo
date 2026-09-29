@@ -2,11 +2,9 @@ package org.example.demo.db.rpc;
 
 import com.github.pagehelper.PageInfo;
 import io.grpc.stub.StreamObserver;
-import org.example.demo.api.dto.AddressDto;
 import org.example.demo.api.dto.UserDto;
 import org.example.demo.db.entity.User;
 import org.example.demo.db.service.UserService;
-import org.example.demo.db.utils.AddressMapstruct;
 import org.example.demo.db.utils.UserMapstruct;
 import org.example.grpc.service.*;
 import org.springframework.grpc.server.service.GrpcService;
@@ -38,7 +36,7 @@ public class UserRpcService extends UserRpcServiceGrpc.UserRpcServiceImplBase {
 
     @Override
     public void queryUsers(org.example.grpc.service.UserQueryParam request,
-                           io.grpc.stub.StreamObserver<org.example.grpc.service.UserQueryParam.Response> responseObserver) {
+                           io.grpc.stub.StreamObserver<UserQueryParam.Response> responseObserver) {
         Map<String, Object> param = new HashMap<>();
         if (StringUtils.hasText(request.getUserName())) {
             param.put("userName", request.getUserName());
@@ -46,16 +44,19 @@ public class UserRpcService extends UserRpcServiceGrpc.UserRpcServiceImplBase {
         if (StringUtils.hasText(request.getEmail())) {
             param.put("email", request.getEmail());
         }
-        if (StringUtils.hasText(request.getAddr())) {
-            param.put("addr", request.getAddr());
-        }
         PageInfo<UserDto> userDtoPageInfo = userService.queryUsers(param, request.getPageNum(), request.getPageSize());
         List<UserInfo> userInfoList = new ArrayList<>();
         for (UserDto userDto : userDtoPageInfo.getList()) {
             UserInfo userInfo = UserMapstruct.INSTANCE.dtoToProto(userDto);
             userInfoList.add(userInfo);
         }
-        UserQueryParam.Response response = UserQueryParam.Response.newBuilder().addAllUserInfo(userInfoList).build();
+        PageInfoMsg pageInfoMsg = PageInfoMsg.newBuilder()
+                .setPageNum(userDtoPageInfo.getPageNum())
+                .setPageSize(userDtoPageInfo.getPageSize())
+                .setPages(userDtoPageInfo.getPages())
+                .setTotal(userDtoPageInfo.getTotal())
+                .setSize(userDtoPageInfo.getSize()).addAllUsers(userInfoList).build();
+        UserQueryParam.Response response =  UserQueryParam.Response.newBuilder().setPageInfo(pageInfoMsg).build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }

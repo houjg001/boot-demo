@@ -30,7 +30,7 @@ public class BootDemoDBApplicationTest {
     @Test
     void pageQuery() {
         Map<String,Object> param = new HashMap<>();
-        param.put("addr", "东城区");
+        param.put("email", "syp@icloud.com");
         PageInfo<UserDto> userDtoPageInfo = userService.queryUsers(param, 0, 0);
         objectMapper.writerFor(PageInfo.class).writeValue(System.out,userDtoPageInfo);
     }
