@@ -18,16 +18,16 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-jackson'
     implementation 'org.springframework.boot:spring-boot-starter-aspectj'
     implementation(libs.mybatis)
     implementation(libs.pagehelper)
-    implementation(libs.mapStruct)
     annotationProcessor(libs.mapStructProcessor)
 //    implementation 'org.springframework.boot:spring-boot-h2console'
 //    runtimeOnly 'com.h2database:h2'
     runtimeOnly 'com.mysql:mysql-connector-j'
-
+    implementation project(':boot-api')
+    implementation 'org.springframework.boot:spring-boot-starter-grpc-server'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
