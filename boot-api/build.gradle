@@ -1,0 +1,71 @@
+plugins {
+    alias(libs.plugins.springBoot)
+    alias(libs.plugins.springDependencyManagement)
+    id 'java-library'
+    id 'com.google.protobuf' version '0.10.0'
+    id 'maven-publish'
+}
+
+group = 'org.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+def protobufJavaVersion = dependencyManagement.importedProperties['protobuf-java.version']
+def grpcJavaVersion = dependencyManagement.importedProperties['grpc-java.version']
+
+dependencies {
+    api(libs.mapStruct)
+    annotationProcessor(libs.mapStructProcessor)
+    implementation platform("org.springframework.grpc:spring-grpc-dependencies:${springGrpcDepVersion}")
+    implementation('org.springframework.grpc:spring-grpc-core') {
+        exclude group: 'org.springframework', module: 'spring-context'
+    }
+    implementation "io.grpc:grpc-stub:${grpcJavaVersion}"
+}
+
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:${protobufJavaVersion}"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcJavaVersion}"
+        }
+    }
+}
+sourceSets {
+    main {
+        proto {
+
+        }
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    archiveClassifier = "sources"
+    from sourceSets.main.allSource
+}
+
+jar {
+    enabled = true
+    archiveClassifier.set("")
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'boot-api'
+            from components.java
+        }
+    }
+}

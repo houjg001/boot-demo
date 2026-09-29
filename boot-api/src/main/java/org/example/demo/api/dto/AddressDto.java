@@ -1,4 +1,4 @@
-package org.example.demo.db.dto;
+package org.example.demo.api.dto;
 
 public class AddressDto {
     private Long addressId;
