@@ -4,8 +4,11 @@ pluginManagement {
             url 'https://repo.huaweicloud.com/repository/maven/'
             allowInsecureProtocol = true
         }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin/' }
     }
 }
 rootProject.name = 'boot-demo'
 
 include 'boot-db'
+include 'boot-web'
+include 'boot-api'
