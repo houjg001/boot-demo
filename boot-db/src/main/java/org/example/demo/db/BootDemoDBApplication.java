@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @MapperScan(basePackages = "org.example.demo.db.mapper", annotationClass = Mapper.class)
 public class BootDemoDBApplication {
-    public static void main(String[] args) {
+    static void main(String[] args) {
         SpringApplication.run(BootDemoDBApplication.class, args);
     }
 }

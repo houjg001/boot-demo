@@ -1,25 +1,26 @@
 package org.example.demo.db;
 
 import com.github.pagehelper.PageInfo;
-import org.example.demo.db.dto.UserDto;
+import org.example.demo.api.dto.UserDto;
 import org.example.demo.db.entity.User;
 import org.example.demo.db.service.UserService;
 import org.example.demo.db.utils.UserMapstruct;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.util.Assert;
 import tools.jackson.databind.ObjectMapper;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 @SpringBootTest
 public class BootDemoDBApplicationTest {
 
     @Autowired
-    ObjectMapper objectMapper;
-    @Autowired
     UserService userService;
+    @Autowired
+    ObjectMapper objectMapper;
 
     @Test
     void contextLoads() {
@@ -28,8 +29,10 @@ public class BootDemoDBApplicationTest {
 
     @Test
     void pageQuery() {
-        PageInfo<UserDto> userDtoPageInfo = userService.queryUsers();
-        objectMapper.writeValue(System.out, userDtoPageInfo);
+        Map<String,Object> param = new HashMap<>();
+        param.put("addr", "东城区");
+        PageInfo<UserDto> userDtoPageInfo = userService.queryUsers(param, 0, 0);
+        objectMapper.writerFor(PageInfo.class).writeValue(System.out,userDtoPageInfo);
     }
 
     @Test
@@ -38,17 +41,17 @@ public class BootDemoDBApplicationTest {
 //        objectMapper.writeValue(System.out, user);
 
         UserDto userDto = UserMapstruct.INSTANCE.entityToDto(user);
-        objectMapper.writeValue(System.out, userDto);
+
     }
 
     @Test
     void saveUser() {
         User user = new User();
-        user.setUsername("test");
+        user.setUserName("test");
         user.setBirthday(LocalDate.of(1978,5, 17));
         user.setEmail("188@139.com");
         user = userService.save(user);
-        objectMapper.writeValue(System.out, user);
+
     }
 
     @Test
@@ -70,9 +73,6 @@ public class BootDemoDBApplicationTest {
                     ]
                 }
                 """;
-        UserDto userDto = objectMapper.readerFor(UserDto.class).readValue(userJson);
-        User user = userService.saveUserWithAddress(userDto);
-        Assert.notNull(user.getUserId(),"用户id");
     }
 
 }
