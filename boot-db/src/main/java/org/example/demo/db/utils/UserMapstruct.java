@@ -24,10 +24,12 @@ public interface UserMapstruct extends MapstructUtils<User, UserDto> {
     @Mapping(target = "birthday", source = "birthday", qualifiedByName = "localDateToTimestamp")
     UserProto toProto(User user);
 
+
     @Mappings({
             @Mapping(target = "birthday", source = "birthday", qualifiedByName = "localDateToTimestamp"),
             @Mapping(target = "addressesList", source = "addresses")}
     )
-    List<UserProto> dtoToProto(List<UserDto> userDto);
+    UserProto dtoToProto(UserDto dao);
+    List<UserProto> dtoListToProtoList(List<UserDto> userDto);
 
 }

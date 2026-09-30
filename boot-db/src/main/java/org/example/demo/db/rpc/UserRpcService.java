@@ -44,7 +44,7 @@ public class UserRpcService extends UserRpcServiceGrpc.UserRpcServiceImplBase {
             param.put("email", request.getEmail());
         }
         PageInfo<UserDto> userDtoPageInfo = userService.queryUsers(param, request.getPageNum(), request.getPageSize());
-        List<UserProto> userInfoList = UserMapstruct.INSTANCE.dtoToProto(userDtoPageInfo.getList());
+        List<UserProto> userInfoList = UserMapstruct.INSTANCE.dtoListToProtoList(userDtoPageInfo.getList());
 
         PageProto pageInfoMsg = PageProto.newBuilder()
                 .setPageNum(userDtoPageInfo.getPageNum())

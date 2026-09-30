@@ -18,7 +18,7 @@ public class UserRpcClient {
 
     public UserDto findUserById(Long userId) {
         UserProto userInfo = blockingStub.selectUserById(UserIdReqProto.newBuilder().setUserId(userId).build()).getUserProto();
-        return UserProtoMapstruct.INSTANCE.toDto(userInfo);
+        return UserProtoMapstruct.INSTANCE.protoToDto(userInfo);
     }
 
     public PageDto<UserDto> queryUsers(Map<String, Object> params) {
@@ -27,7 +27,7 @@ public class UserRpcClient {
                 .setPageSize(Integer.parseInt(params.get("pageSize").toString()))
                 .build()).getPageProto();
         //转为dto
-        List<UserDto> userDtoList = UserProtoMapstruct.INSTANCE.protoToDto(pageInfoMsg.getUsersList());
+        List<UserDto> userDtoList = UserProtoMapstruct.INSTANCE.protoListToDtoList(pageInfoMsg.getUsersList());
         //拼装page对象
         PageDto<UserDto> pageDto = new PageDto<>();
         pageDto.setPageNum(pageInfoMsg.getPageNum());

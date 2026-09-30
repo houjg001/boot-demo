@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED)
 public interface UserProtoMapstruct {
 
     UserProtoMapstruct INSTANCE = Mappers.getMapper(UserProtoMapstruct.class);
@@ -22,14 +22,13 @@ public interface UserProtoMapstruct {
         return instant.atZone(ZoneId.of("UTC")).toLocalDate();
     }
 
-    @Mapping(target = "birthday", source = "birthday", qualifiedByName = "timestampToLocalDate")
-    UserDto toDto(UserProto userInfo);
-
     @Mappings({
             @Mapping(target = "birthday", source = "birthday", qualifiedByName = "timestampToLocalDate"),
             @Mapping(target = "addresses", source = "addressesList")}
     )
-    List<UserDto> protoToDto(List<UserProto> userInfo);
+    UserDto protoToDto(UserProto proto);
+
+    List<UserDto> protoListToDtoList(List<UserProto> userProtoList);
 
 
 }
