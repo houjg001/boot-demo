@@ -1,16 +1,26 @@
-# Getting Started
+# 系统环境
+* jdk25
+* docker
 
-### Reference Documentation
+### 数据库准备
+**启动mysql容器**  
+`docker compose up mysql-9 -d`
 
-For further reference, please consider the following sections:
+## 项目编译
+`.\gradlew.bat clean build -x test`
 
-* [Official Gradle documentation](https://docs.gradle.org)
-* [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/4.1.1/gradle-plugin)
-* [Create an OCI image](https://docs.spring.io/spring-boot/4.1.1/gradle-plugin/packaging-oci-image.html)
+## 创建表
+* 路径: boot-db/src/test/resources/schema.sql
+## 导入数据
+`.\gradlew.bat  test --tests BootDemoDBApplicationTest.dbInit`
 
-### Additional Links
+## 运行protobuf插件
+`.\gradlew.bat :boot-api:generateProto`
 
-These additional references should also help you:
+## 运行grpc server
+`.\gradlew.bat :boot-db:bootRun`
 
-* [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
+## 运行grpc client
+`.\gradlew.bat :boot-web:bootRun`
+
 
