@@ -8,7 +8,7 @@
         <result column="email" jdbcType="VARCHAR" property="email" />
         <collection property="addresses" ofType="org.example.demo.api.dto.AddressDto"
                      select="org.example.demo.db.mapper.AddressMapper.queryAddressByUserId"
-                     column="user_id" fetchType="lazy">
+                     column="user_id" fetchType="eager">
             <id column="address_id" jdbcType="BIGINT" property="addressId"/>
             <result column="addr" jdbcType="VARCHAR" property="addr" />
             <result column="postcode" jdbcType="VARCHAR" property="postcode" />
@@ -28,7 +28,7 @@
         FROM t_users u
         <trim prefix="WHERE" suffixOverrides="and">
             <if test="userName != null">
-                u.user_name = #{userName} and
+                u.user_name LIKE CONCAT('%', #{userName},'%') and
             </if>
             <if test="email != null">
                 u.email = #{email} and

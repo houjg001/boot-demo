@@ -8,9 +8,10 @@ import org.example.demo.db.utils.UserMapstruct;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.jdbc.core.JdbcTemplate;
 import tools.jackson.databind.ObjectMapper;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,11 +22,25 @@ public class BootDemoDBApplicationTest {
     UserService userService;
     @Autowired
     ObjectMapper objectMapper;
+    @Autowired
+    ResourceLoader resourceLoader;
 
-    @Test
-    void contextLoads() {
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
-    }
+    /*@Test
+    void contextLoads() throws IOException {
+        jdbcTemplate.execute("TRUNCATE TABLE t_users");
+        jdbcTemplate.execute("TRUNCATE TABLE t_addresses");
+        jdbcTemplate.execute("TRUNCATE TABLE t_users_addresses");
+
+        Resource resource = resourceLoader.getResource("classpath:users.json");
+        InputStream inputStream = resource.getInputStream();
+        UserDto[] userDtos = objectMapper.readValue(inputStream, UserDto[].class);
+        for (UserDto userDto : userDtos) {
+            userService.saveUserWithAddress(userDto);
+        }
+    }*/
 
     @Test
     void pageQuery() {
@@ -44,7 +59,7 @@ public class BootDemoDBApplicationTest {
 
     }
 
-    @Test
+    /*@Test
     void saveUser() {
         User user = new User();
         user.setUserName("test");
@@ -52,13 +67,13 @@ public class BootDemoDBApplicationTest {
         user.setEmail("188@139.com");
         user = userService.save(user);
 
-    }
+    }*/
 
     @Test
     void saveUserWithAddress() {
         String userJson = """
                 {
-                    "username": "刘五哥",
+                    "userName": "刘五哥",
                     "birthday": "1989-04-19",
                     "email": "lwg@sohu.com",
                     "addresses": [
