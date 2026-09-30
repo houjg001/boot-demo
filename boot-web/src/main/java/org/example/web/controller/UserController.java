@@ -1,14 +1,13 @@
 package org.example.web.controller;
 
+import org.example.demo.api.dto.PageDto;
 import org.example.demo.api.dto.UserDto;
-import org.example.grpc.service.UserInfo;
 import org.example.web.rpc.UserRpcClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -23,8 +22,14 @@ public class UserController {
         return ResponseEntity.ok(userDto);
     }
 
-    @GetMapping("/hello")
-    public ResponseEntity<UserInfo> getUserInfo() {
-        return ResponseEntity.ok(UserInfo.newBuilder().setUserId(3L).build());
+    /**
+     * 分页查询用户
+     * @param params
+     * @return
+     */
+    @GetMapping("/queryUsers")
+    public ResponseEntity<PageDto<UserDto>> queryUser(@RequestParam Map<String, Object> params) {
+        PageDto<UserDto> userDtoList = userRpcClient.queryUsers(params);
+        return ResponseEntity.ok(userDtoList);
     }
 }

@@ -25,18 +25,18 @@ public class UserRpcService extends UserRpcServiceGrpc.UserRpcServiceImplBase {
     }
 
     @Override
-    public void selectUserById(UserIdReq idReq, StreamObserver<UserIdReq.Response> responseObserver) {
+    public void selectUserById(UserIdReqProto idReq, StreamObserver<UserIdReqProto.Response> responseObserver) {
         User user = userService.findById(idReq.getUserId());
 
-        UserInfo userInfo = UserMapstruct.INSTANCE.toProto(user);
-        UserIdReq.Response response = UserIdReq.Response.newBuilder().setUserInfo(userInfo).build();
+        UserProto userInfo = UserMapstruct.INSTANCE.toProto(user);
+        UserIdReqProto.Response response = UserIdReqProto.Response.newBuilder().setUserProto(userInfo).build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
 
     @Override
-    public void queryUsers(org.example.grpc.service.UserQueryParam request,
-                           io.grpc.stub.StreamObserver<UserQueryParam.Response> responseObserver) {
+    public void queryUsers(org.example.grpc.service.UserQueryProto request,
+                           io.grpc.stub.StreamObserver<UserQueryProto.Response> responseObserver) {
         Map<String, Object> param = new HashMap<>();
         if (StringUtils.hasText(request.getUserName())) {
             param.put("userName", request.getUserName());
@@ -45,18 +45,15 @@ public class UserRpcService extends UserRpcServiceGrpc.UserRpcServiceImplBase {
             param.put("email", request.getEmail());
         }
         PageInfo<UserDto> userDtoPageInfo = userService.queryUsers(param, request.getPageNum(), request.getPageSize());
-        List<UserInfo> userInfoList = new ArrayList<>();
-        for (UserDto userDto : userDtoPageInfo.getList()) {
-            UserInfo userInfo = UserMapstruct.INSTANCE.dtoToProto(userDto);
-            userInfoList.add(userInfo);
-        }
-        PageInfoMsg pageInfoMsg = PageInfoMsg.newBuilder()
+        List<UserProto> userInfoList = UserMapstruct.INSTANCE.dtoToProto(userDtoPageInfo.getList());
+
+        PageProto pageInfoMsg = PageProto.newBuilder()
                 .setPageNum(userDtoPageInfo.getPageNum())
                 .setPageSize(userDtoPageInfo.getPageSize())
                 .setPages(userDtoPageInfo.getPages())
                 .setTotal(userDtoPageInfo.getTotal())
-                .setSize(userDtoPageInfo.getSize()).addAllUsers(userInfoList).build();
-        UserQueryParam.Response response =  UserQueryParam.Response.newBuilder().setPageInfo(pageInfoMsg).build();
+                .addAllUsers(userInfoList).build();
+        UserQueryProto.Response response =  UserQueryProto.Response.newBuilder().setPageProto(pageInfoMsg).build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }

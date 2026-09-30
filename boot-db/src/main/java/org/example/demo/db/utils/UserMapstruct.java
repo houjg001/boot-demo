@@ -3,11 +3,12 @@ package org.example.demo.db.utils;
 import com.google.protobuf.Timestamp;
 import org.example.demo.api.dto.UserDto;
 import org.example.demo.db.entity.User;
-import org.example.grpc.service.UserInfo;
+import org.example.grpc.service.UserProto;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.time.*;
+import java.util.List;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED)
 public interface UserMapstruct extends MapstructUtils<User, UserDto> {
@@ -21,12 +22,12 @@ public interface UserMapstruct extends MapstructUtils<User, UserDto> {
     }
 
     @Mapping(target = "birthday", source = "birthday", qualifiedByName = "localDateToTimestamp")
-    UserInfo toProto(User user);
+    UserProto toProto(User user);
 
     @Mappings({
             @Mapping(target = "birthday", source = "birthday", qualifiedByName = "localDateToTimestamp"),
             @Mapping(target = "addressesList", source = "addresses")}
     )
-    UserInfo dtoToProto(UserDto userDto);
+    List<UserProto> dtoToProto(List<UserDto> userDto);
 
 }
