@@ -8,10 +8,14 @@ import org.example.demo.db.utils.UserMapstruct;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.jdbc.core.JdbcTemplate;
 import tools.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +33,7 @@ public class BootDemoDBApplicationTest {
     JdbcTemplate jdbcTemplate;
 
     /*@Test
-    void contextLoads() throws IOException {
+    void dbInit() throws IOException {
         jdbcTemplate.execute("TRUNCATE TABLE t_users");
         jdbcTemplate.execute("TRUNCATE TABLE t_addresses");
         jdbcTemplate.execute("TRUNCATE TABLE t_users_addresses");
