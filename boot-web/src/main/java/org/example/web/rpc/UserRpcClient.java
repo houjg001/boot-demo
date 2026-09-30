@@ -18,8 +18,7 @@ public class UserRpcClient {
 
     public UserDto findUserById(Long userId) {
         UserProto userInfo = blockingStub.selectUserById(UserIdReqProto.newBuilder().setUserId(userId).build()).getUserProto();
-        UserDto userDto = UserProtoMapstruct.INSTANCE.toDto(userInfo);
-        return userDto;
+        return UserProtoMapstruct.INSTANCE.toDto(userInfo);
     }
 
     public PageDto<UserDto> queryUsers(Map<String, Object> params) {

@@ -9,7 +9,7 @@ import org.springframework.grpc.client.ImportGrpcClients;
 @ImportGrpcClients
 public class BootWebApplication {
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         SpringApplication.run(BootWebApplication.class, args);
     }
 
