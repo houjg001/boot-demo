@@ -46,19 +46,6 @@ protobuf {
         }
     }
 }
-sourceSets {
-    main {
-        proto {
-
-        }
-    }
-}
-
-tasks.register('sourcesJar', Jar) {
-    dependsOn classes
-    archiveClassifier = "sources"
-    from sourceSets.main.allSource
-}
 
 jar {
     enabled = true
