@@ -1,3 +1,4 @@
 ext {
     springGrpcDepVersion = '1.1.1'
+    gsonVersion = '2.13.2'
 }

@@ -10,7 +10,7 @@ group = 'org.example'
 version = '0.0.1-SNAPSHOT'
 
 bootJar {
-    enabled=false
+    enabled = false
 }
 java {
     toolchain {
@@ -33,6 +33,10 @@ dependencies {
         exclude group: 'org.springframework', module: 'spring-context'
     }
     implementation "io.grpc:grpc-stub:${grpcJavaVersion}"
+    implementation "com.google.code.gson:gson:${gsonVersion}"
+
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 
@@ -59,4 +63,8 @@ publishing {
             from components.java
         }
     }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
 }
