@@ -22,6 +22,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-aspectj'
     implementation(libs.mybatis)
     implementation(libs.pagehelper)
+    implementation 'org.springframework.boot:spring-boot-starter-kafka'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
     annotationProcessor(libs.mapStructProcessor)
 //    implementation 'org.springframework.boot:spring-boot-h2console'
 //    runtimeOnly 'com.h2database:h2'

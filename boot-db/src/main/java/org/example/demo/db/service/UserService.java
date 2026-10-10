@@ -12,4 +12,6 @@ public interface UserService extends BaseService<User> {
     PageInfo<UserDto> queryUsers(Map<String,Object> param, int pageNum, int pageSize);
 
     User saveUserWithAddress(UserDto userDto);
+
+    Integer updateUserById(UserDto userDto);
 }

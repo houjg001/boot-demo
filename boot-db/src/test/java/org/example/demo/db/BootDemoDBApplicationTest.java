@@ -94,4 +94,12 @@ public class BootDemoDBApplicationTest {
                 """;
     }
 
+    @Test
+    void updateUserById() {
+        UserDto userDto = new UserDto();
+        userDto.setUserId(3L);
+        userDto.setEmail("xiu9657@gmail.com");
+        userService.updateUserById(userDto);
+    }
+
 }

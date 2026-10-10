@@ -17,7 +17,12 @@ spring:
 #    console:
 #      path: /h2-console
 #      enabled: true
-
+  kafka:
+    bootstrap-servers:
+      - localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JacksonJsonSerializer
 mybatis:
   mapper-locations:
     - classpath*:/org/**/mapper/**/*.xml
