@@ -1,7 +1,9 @@
 server.port: 8088
 
 spring.grpc.client.channel.default.target: static://host.docker.internal:8090
-
+spring:
+  application:
+    name: boot-web
 
 ---
 

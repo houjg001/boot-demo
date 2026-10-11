@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!--日志文件目录-->
+    <springProperty scope="context" name="LOG_HOME" source="log.home" defaultValue="./logs"/>
+    <!--日志文件名前缀-->
+    <springProperty scope="context" name="APP_NAME" source="spring.application.name"/>
+    <!--日志内部属性-->
+    <property name="LOG_CHARSET" value="UTF-8"/>
+    <property name="LOG_DIR" value="${LOG_HOME}/%d{yyyyMMdd}"/> <!--按天生成日志-->
+    <property name="MAX_FILE_SIZE" value="1MB"/><!--日志文件大小-->
+    <property name="MAX_HISTORY" value="7"/><!--日志保留天数-->
+    <!--日志文件中格式配置-->
+    <property name="LOG_MSG"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p ${PID:- } --- [${APP_NAME}] [${HOSTNAME}] [%15.15t] %-40.40logger{39} : %m%n "/>
+    <property name="CONSOLE_LOG"
+              value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([${APP_NAME}]){faint} [${HOSTNAME}] %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE_ALL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/all_${APP_NAME}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${LOG_DIR}/all_${APP_NAME}_%i.log</fileNamePattern>
+            <!-- each file should be at most 100MB, keep 60 days worth of history, but at most 20GB -->
+            <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+            <maxHistory>${MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${LOG_MSG}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch> <!--ACCEPT 匹配该级别及以上 DEMY 不匹配该级别及以上 NERTRAL 该级别及以上由下一个filter处理 如果最后一个则匹配该级别及以上-->
+            <onMismatch>DENY</onMismatch><!--ACCEPT 匹配该级别以下 DEMY 不匹配该级别以下 NERTRAL 该级别及以下由下一个fileter处理 如果最后一个则不匹配该级别以下-->
+        </filter>
+        <file>${LOG_HOME}/err_${APP_NAME}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/err_${APP_NAME}_%i.log</fileNamePattern>
+            <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+            <maxHistory>${MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${LOG_MSG}</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE_ALL"/>
+        <appender-ref ref="FILE_ERROR"/>
+    </root>
+</configuration>

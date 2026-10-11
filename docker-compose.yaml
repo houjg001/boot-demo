@@ -20,13 +20,16 @@ services:
     container_name: boot-db
     ports:
       - "9090:9090"
+    depends_on:
+      - mysql
 
   boot-web:
     image: boot-web:0.0.1-SNAPSHOT
     container_name: boot-web
     ports:
       - "8080:8080"
-
+    depends_on:
+      - boot-db
 
 volumes:
   mysql_data:
