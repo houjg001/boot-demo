@@ -1,6 +1,9 @@
 spring.application.name: boot-db
 
 spring:
+  grpc:
+    server:
+      port: 8090
   datasource:
 #    url: jdbc:h2:file:~/testdb
 #    username: sa
@@ -23,6 +26,7 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JacksonJsonSerializer
+
 mybatis:
   mapper-locations:
     - classpath*:/org/**/mapper/**/*.xml

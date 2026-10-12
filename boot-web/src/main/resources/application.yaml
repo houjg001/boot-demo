@@ -17,14 +17,16 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JacksonJsonSerializer
+  grpc:
+    client:
+      channel:
+        default.target: static://0.0.0.0:${launched.grpc.port:8090}
 
 management:
   endpoints:
     web:
       exposure:
-        include:
-          - health
-          - info
+        include: health,info,metrics
   tracing:
     export:
       enabled: false
@@ -41,4 +43,9 @@ management:
   otlp:
     metrics:
       export:
-        enabled: false
+        enabled: true
+        url: http://localhost:4318/v1/metrics
+        step: 5s
+
+server:
+  port: 8088
