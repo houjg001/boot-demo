@@ -23,7 +23,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-kafka'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-opentelemetry'
-    implementation 'io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0:${otelLogbackVersion}'
+    implementation "io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0:${otelLogbackVersion}"
 
     testImplementation 'org.springframework.kafka:spring-kafka-test'
 }
