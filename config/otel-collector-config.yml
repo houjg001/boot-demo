@@ -25,6 +25,11 @@ exporters:
     endpoint: http://loki:3100/otlp
   prometheus:
     endpoint: 0.0.0.0:9464
+  otlp/tempo:
+    endpoint: tempo:4317
+    tls:
+      insecure: true
+
   debug:
     verbosity: basic
 
@@ -38,3 +43,7 @@ service:
       receivers: [ otlp ]
       processors: [ resource,batch ]
       exporters: [ prometheus ]
+    traces:
+      receivers: [ otlp ]
+      processors: [ resource, batch ]
+      exporters: [ otlp/tempo, debug ]

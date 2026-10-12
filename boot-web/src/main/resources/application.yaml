@@ -17,6 +17,10 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JacksonJsonSerializer
+    listener:
+      observation-enabled: true
+    template:
+      observation-enabled: true
   grpc:
     client:
       channel:
@@ -29,7 +33,9 @@ management:
         include: health,info,metrics
   tracing:
     export:
-      enabled: false
+      enabled: true
+    sampling:
+      probability: 1.0
 
   opentelemetry:
     resource-attributes:
@@ -40,6 +46,11 @@ management:
       export:
         otlp:
           endpoint: http://localhost:4318/v1/logs
+    tracing:
+      export:
+        otlp:
+          endpoint: http://localhost:4318/v1/traces
+
   otlp:
     metrics:
       export:
