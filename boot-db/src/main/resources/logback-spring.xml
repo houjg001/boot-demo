@@ -14,14 +14,20 @@
     <property name="MAX_HISTORY" value="7"/><!--日志保留天数-->
     <!--日志文件中格式配置-->
     <property name="LOG_MSG"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p ${PID:- } --- [${APP_NAME}] [${HOSTNAME}] [%15.15t] %-40.40logger{39} : %m%n "/>
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p ${PID:- } [%X{traceId}] --- [${APP_NAME}] [${HOSTNAME}] [%15.15t] %-40.40logger{39} : %m%n "/>
     <property name="CONSOLE_LOG"
-              value="%clr(%d{${LOG_DATEFORMAT_PATTERN:yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([${APP_NAME}]){faint} [${HOSTNAME}] %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+              value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} [%X{traceId}] %clr(---){faint} %clr([${APP_NAME}]){faint} [${HOSTNAME}] %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
 
        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>${CONSOLE_LOG}</pattern>
         </encoder>
+    </appender>
+
+    <appender name="OTEL" class="io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender">
+        <captureMdcAttributes>traceId,spanId</captureMdcAttributes>
+        <captureKeyValuePairAttributes>true</captureKeyValuePairAttributes>
+        <captureLoggerContext>true</captureLoggerContext>
     </appender>
 
     <appender name="FILE_ALL" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -57,5 +63,6 @@
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE_ALL"/>
         <appender-ref ref="FILE_ERROR"/>
+        <appender-ref ref="OTEL"/>
     </root>
 </configuration>

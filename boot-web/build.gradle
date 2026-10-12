@@ -17,10 +17,14 @@ repositories {
     mavenCentral()
 }
 dependencies {
+    implementation project(":boot-api")
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation('org.springframework.boot:spring-boot-starter-grpc-client')
-    implementation project(":boot-api")
     implementation 'org.springframework.boot:spring-boot-starter-kafka'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-opentelemetry'
+    implementation 'io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0:${otelLogbackVersion}'
+
     testImplementation 'org.springframework.kafka:spring-kafka-test'
 }
 

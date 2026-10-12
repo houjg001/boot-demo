@@ -38,6 +38,43 @@ services:
     volumes:
       - kafka_data:/var/lib/kafka/data
 
+  loki:
+    image: grafana/loki:3.7.7
+    environment:
+      TZ: "Asia/Shanghai"
+    container_name: loki-local
+    command: [ "-config.file=/etc/loki/local-config.yaml" ]
+    ports:
+      - "3100:3100"
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.160.0
+    environment:
+      TZ: "Asia/Shanghai"
+    container_name: otel-collector-local
+    command: [ "--config=/etc/otelcol/config.yml" ]
+    volumes:
+      - ./config/otel-collector-config.yml:/etc/otelcol/config.yml:ro
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+    depends_on:
+      - loki
+
+  grafana:
+    image: grafana/grafana:13.2.3
+    container_name: grafana-local
+    ports:
+      - "3000:3000"
+    environment:
+      TZ: "Asia/Shanghai"
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - ./config/grafana-datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml:ro
+    depends_on:
+      - loki
+
 volumes:
   mysql_data:
   kafka_data:

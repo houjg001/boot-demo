@@ -32,3 +32,28 @@ mybatis:
 #    org.example.demo.db.mapper: debug
 #    org.springframework.boot: INFO
 #    org.springframework.transaction: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+  tracing:
+    export:
+      enabled: false
+
+  opentelemetry:
+    resource-attributes:
+      service.name: ${spring.application.name}
+      service.version: 1.0.0
+      deployment.environment: local
+    logging:
+      export:
+        otlp:
+          endpoint: http://localhost:4318/v1/logs
+  otlp:
+    metrics:
+      export:
+        enabled: false

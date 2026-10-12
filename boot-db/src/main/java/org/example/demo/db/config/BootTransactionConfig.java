@@ -16,7 +16,7 @@ import org.springframework.transaction.interceptor.TransactionInterceptor;
 import java.util.Collections;
 
 @Configuration
-//@ImportResource("classpath:context.xml")
+//@ImportResource("classpath:spring/context.xml")
 public class BootTransactionConfig {
 
     private static final String[] READ_ONLY_METHOD_PREFIX = new String[]{"select*", "query*", "search*", "count*", "find*"};

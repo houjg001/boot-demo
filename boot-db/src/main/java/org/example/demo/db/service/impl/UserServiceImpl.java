@@ -2,6 +2,7 @@ package org.example.demo.db.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
 import jakarta.annotation.Resource;
 import org.example.demo.api.dto.AddressDto;
 import org.example.demo.api.dto.UserDto;
@@ -36,6 +37,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     final UserAddressMapper userAddressMapper;
     @Autowired
     private KafkaTemplate<String, Object> kafkaTemplate;
+    @Autowired
+    private Gson gson;
 
     public UserServiceImpl(UserMapper userMapper, AddressMapper addressMapper, UserAddressMapper userAddressMapper) {
         this.userMapper = userMapper;
@@ -45,6 +48,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
     @Override
     public PageInfo<UserDto> queryUsers(Map<String, Object> param, int pageNum, int pageSize) {
+        logger.info("用户列表查询入参:{},{},{}", gson.toJson(param), pageNum, pageSize);
         if (pageNum == 0) pageNum = 1;
         if (pageSize == 0) pageSize = 10;
         PageHelper.startPage(pageNum, pageSize);
