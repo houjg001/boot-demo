@@ -65,6 +65,4 @@ management:
   otlp:
     metrics:
       export:
-        enabled: true
-        url: http://localhost:4318/v1/metrics
-        step: 5s
+        enabled: false
