@@ -21,7 +21,7 @@ processors:
   batch:
 
 exporters:
-  otlphttp/loki:
+  otlphttp/logs:
     endpoint: http://loki:3100/otlp
   prometheus:
     endpoint: 0.0.0.0:9464
@@ -38,7 +38,7 @@ service:
     logs:
       receivers: [ otlp ]
       processors: [ resource,batch ]
-      exporters: [ otlphttp/loki, debug ]
+      exporters: [ otlphttp/logs, debug ]
     metrics:
       receivers: [ otlp ]
       processors: [ resource,batch ]

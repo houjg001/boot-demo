@@ -3,19 +3,49 @@ apiVersion: 1
 datasources:
   - name: Loki
     type: loki
+    uid: loki
     access: proxy
     url: http://loki:3100
     isDefault: false
     editable: true
+    jsonData:
+      maxLines: 1000
+      derivedFields:
+        - datasourceUid: tempo
+          matcherType: label            # OTLP 推送的场景应使用 label
+          matcherRegex: trace_id        # 匹配结构化元数据中的 trace_id 键
+          name: TraceID                 # 在日志详情中显示的字段名
+          url: "$${__value.raw}"        # 传递 trace_id 值，YAML 中 $ 需转义为 $$
+          urlDisplayLabel: "查看 Trace"
   - name: Prometheus
     type: prometheus
+    uid: prometheus
     access: proxy
     url: http://prometheus:9090
     isDefault: true
     editable: true
+    jsonData:
+      httpMethod: POST
+      prometheusType: Prometheus
+      timeInterval: 5s
+      exemplarTraceIdDestinations:
+        - datasourceUid: tempo
+          name: traceID
   - name: Tempo
     type: tempo
     uid: tempo
     access: proxy
     url: http://tempo:3200
     editable: true
+    jsonData:
+      tracesToLogsV2:
+        datasourceUid: loki
+        spanStartTimeShift: -2m
+        spanEndTimeShift: 2m
+        tags:
+          - key: service.name
+            value: service_name
+        filterByTraceID: false
+        filterBySpanID: false
+        customQuery: true
+        query: '{$${__tags}} | json | traceid="$${__trace.traceId}"'

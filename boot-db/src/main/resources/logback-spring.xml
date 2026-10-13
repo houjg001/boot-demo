@@ -3,10 +3,10 @@
 
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
 
-    <!--日志文件目录-->
-    <springProperty scope="context" name="LOG_HOME" source="log.home" defaultValue="/data/logs/boot-db"/>
     <!--日志文件名前缀-->
     <springProperty scope="context" name="APP_NAME" source="spring.application.name"/>
+    <!--日志文件目录-->
+    <property name="LOG_HOME" value="/data/logs/boot-web"/>
     <!--日志内部属性-->
     <property name="LOG_CHARSET" value="UTF-8"/>
     <property name="LOG_DIR" value="${LOG_HOME}/%d{yyyyMMdd}"/> <!--按天生成日志-->
@@ -25,9 +25,9 @@
     </appender>
 
     <appender name="OTEL" class="io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender">
-        <captureMdcAttributes>traceId,spanId</captureMdcAttributes>
+        <!--<captureMdcAttributes>traceId,spanId</captureMdcAttributes>
         <captureKeyValuePairAttributes>true</captureKeyValuePairAttributes>
-        <captureLoggerContext>true</captureLoggerContext>
+        <captureLoggerContext>true</captureLoggerContext>-->
     </appender>
 
     <appender name="FILE_ALL" class="ch.qos.logback.core.rolling.RollingFileAppender">
