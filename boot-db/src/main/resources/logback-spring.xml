@@ -6,7 +6,7 @@
     <!--日志文件名前缀-->
     <springProperty scope="context" name="APP_NAME" source="spring.application.name"/>
     <!--日志文件目录-->
-    <property name="LOG_HOME" value="/data/logs/boot-web"/>
+    <property name="LOG_HOME" value="/data/logs/boot-db"/>
     <!--日志内部属性-->
     <property name="LOG_CHARSET" value="UTF-8"/>
     <property name="LOG_DIR" value="${LOG_HOME}/%d{yyyyMMdd}"/> <!--按天生成日志-->
