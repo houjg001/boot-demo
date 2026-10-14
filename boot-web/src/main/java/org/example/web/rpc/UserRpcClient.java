@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,12 @@ public class UserRpcClient {
 
     public PageDto<UserDto> queryUsers(Map<String, Object> params) {
         logger.info("查询用户列表入参:{}", gson.toJson(params));
+        if(params.get("pageNum") == null) {
+            params.put("pageNum", 1);
+        }
+        if(params.get("pageSize") == null) {
+            params.put("pageSize", 10);
+        }
         PageProto pageInfoMsg = blockingStub.queryUsers(UserQueryProto.newBuilder()
                 .setPageNum(Integer.parseInt(params.get("pageNum").toString()))
                 .setPageSize(Integer.parseInt(params.get("pageSize").toString()))
