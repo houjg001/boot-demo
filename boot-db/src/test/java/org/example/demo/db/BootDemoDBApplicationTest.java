@@ -32,7 +32,7 @@ public class BootDemoDBApplicationTest {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    /*@Test
+    @Test
     void dbInit() throws IOException {
         jdbcTemplate.execute("TRUNCATE TABLE t_users");
         jdbcTemplate.execute("TRUNCATE TABLE t_addresses");
@@ -44,7 +44,7 @@ public class BootDemoDBApplicationTest {
         for (UserDto userDto : userDtos) {
             userService.saveUserWithAddress(userDto);
         }
-    }*/
+    }
 
     @Test
     void pageQuery() {

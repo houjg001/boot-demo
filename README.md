@@ -6,11 +6,15 @@
 **启动mysql容器**  
 `docker compose up mysql-9 -d`
 
+**新建数据库**
+CREATE DATABASE `boot-db`;
+
+**创建表**
+* 路径: boot-db/src/test/resources/schema.sql
+
 ## 项目编译
 `.\gradlew.bat clean build -x test`
 
-## 创建表
-* 路径: boot-db/src/test/resources/schema.sql
 ## 导入数据
 `.\gradlew.bat  test --tests BootDemoDBApplicationTest.dbInit`
 
