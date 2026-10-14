@@ -27,6 +27,4 @@ mybatis:
 
 logging:
   level:
-    org.example.demo.db.mapper: debug
-    org.springframework.boot: INFO
-    org.springframework.transaction: DEBUG
+    org.example.demo.db: info
