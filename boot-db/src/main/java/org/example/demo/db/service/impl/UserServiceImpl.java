@@ -47,6 +47,11 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     }
 
     @Override
+    public UserDto queryUserById(Long id) {
+        return userMapper.selectUserWithAddressByUserId(id);
+    }
+
+    @Override
     public PageInfo<UserDto> queryUsers(Map<String, Object> param, int pageNum, int pageSize) {
         logger.info("用户列表查询入参:{},{},{}", gson.toJson(param), pageNum, pageSize);
         if (pageNum == 0) pageNum = 1;
