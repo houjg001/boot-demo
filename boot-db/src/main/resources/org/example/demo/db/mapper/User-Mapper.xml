@@ -16,10 +16,8 @@
     </resultMap>
 
     <select id="selectUserWithAddressByUserId" resultMap="UserDtoResult">
-        SELECT u.user_id,u.user_name,u.birthday,u.email,ad.address_id, ad.addr,ad.postcode
+        SELECT u.user_id,u.user_name,u.birthday,u.email
         FROM t_users u
-        JOIN t_users_addresses ua ON u.user_id=ua.user_id
-        JOIN t_addresses ad ON ua.address_id=ad.address_id
         WHERE u.user_id=#{userId}
     </select>
 
