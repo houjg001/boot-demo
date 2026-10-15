@@ -25,9 +25,9 @@ public class UserRpcService extends UserRpcServiceGrpc.UserRpcServiceImplBase {
 
     @Override
     public void selectUserById(UserIdReqProto idReq, StreamObserver<UserIdReqProto.Response> responseObserver) {
-        User user = userService.findById(idReq.getUserId());
+        UserDto user = userService.queryUserById(idReq.getUserId());
 
-        UserProto userInfo = UserMapstruct.INSTANCE.toProto(user);
+        UserProto userInfo = UserMapstruct.INSTANCE.dtoToProto(user);
         UserIdReqProto.Response response = UserIdReqProto.Response.newBuilder().setUserProto(userInfo).build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();

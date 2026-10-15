@@ -33,6 +33,11 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     }
 
     @Override
+    public UserDto queryUserById(Long id) {
+        return userMapper.selectUserWithAddressByUserId(id);
+    }
+
+    @Override
     public PageInfo<UserDto> queryUsers(Map<String,Object> param, int pageNum, int pageSize) {
         if (pageNum == 0) pageNum = 1;
         if (pageSize == 0) pageSize = 10;
