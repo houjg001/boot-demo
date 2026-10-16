@@ -54,7 +54,7 @@ services:
     container_name: otel-collector-local
     command: [ "--config=/etc/otelcol/config.yml" ]
     volumes:
-      - ./config/otel-collector-config.yml:/etc/otelcol/config.yml:ro
+      - ./docker-config/otel-collector-config.yml:/etc/otelcol/config.yml:ro
     ports:
       - "4317:4317"
       - "4318:4318"
@@ -71,7 +71,7 @@ services:
       GF_SECURITY_ADMIN_USER: admin
       GF_SECURITY_ADMIN_PASSWORD: admin
     volumes:
-      - ./config/grafana-datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml:ro
+      - ./docker-config/grafana-datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml:ro
       - grafana-data:/var/lib/grafana
     depends_on:
       - loki
@@ -84,7 +84,7 @@ services:
     container_name: prometheus-local
     command: [ "--config.file=/etc/prometheus/prometheus.yml" ]
     volumes:
-      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./docker-config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
     ports:
       - "9090:9090"
     depends_on:
@@ -97,7 +97,7 @@ services:
     container_name: tempo-local
     command: [ "-config.file=/etc/tempo.yml" ]
     volumes:
-      - ./config/tempo.yml:/etc/tempo.yml:ro
+      - ./docker-config/tempo.yml:/etc/tempo.yml:ro
     ports:
       - "3200:3200"
 
