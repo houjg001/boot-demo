@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: boot-db
+  labels:
+    app: boot-db
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: boot-db
+  template:
+    metadata:
+      name: boot-db
+      labels:
+        app: boot-db
+    spec:
+      containers:
+        - name: boot-db
+          image: boot-db:0.0.1-SNAPSHOT
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: docker
+      restartPolicy: Always
+      

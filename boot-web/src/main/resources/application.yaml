@@ -1,0 +1,18 @@
+server.port: 8088
+
+spring.grpc.client.channel.default.target: static://host.docker.internal:8090
+
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile:
+        - docker
+  grpc:
+    client:
+      channel:
+        default.target: static://boot-db:9090
+server:
+  port: 8080

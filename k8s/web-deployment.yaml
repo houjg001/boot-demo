@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: boot-web
+  labels:
+    app: boot-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: boot-web
+  template:
+    metadata:
+      name: boot-web
+      labels:
+        app: boot-web
+    spec:
+      containers:
+        - name: boot-web
+          image: boot-web:0.0.1-SNAPSHOT
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: docker
+      restartPolicy: Always
+      

@@ -1,5 +1,5 @@
 services:
-  mysql-9:
+  mysql:
     image: mysql:9.7.0
     container_name: mysql-local
     environment:
@@ -14,6 +14,27 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
       - ./docker-config/my.cnf:/etc/mysql/conf.d/my.cnf:0644
+
+  boot-db:
+    image: boot-db:0.0.1-SNAPSHOT
+    container_name: boot-db
+    environment:
+      TZ: "Asia/Shanghai"
+      SPRING_PROFILES_ACTIVE: docker
+
+    ports:
+      - "9090:9090"
+
+  boot-web:
+    image: boot-web:0.0.1-SNAPSHOT
+    container_name: boot-web
+    environment:
+      TZ: "Asia/Shanghai"
+      SPRING_PROFILES_ACTIVE: docker
+
+    ports:
+      - "8080:8080"
+
 
 volumes:
   mysql_data:

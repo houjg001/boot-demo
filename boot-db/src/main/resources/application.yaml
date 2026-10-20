@@ -9,9 +9,6 @@ spring:
     url: jdbc:mysql://localhost:3306/boot-db?
     username: boot
     password: boot
-  grpc:
-    server:
-      port: 8090
 #  jpa:
 #    database-platform: org.hibernate.dialect.MySQLDialect
 #    show-sql: true
@@ -28,3 +25,13 @@ mybatis:
 logging:
   level:
     org.example.demo.db: info
+
+---
+
+spring:
+  datasource:
+    url: jdbc:mysql://host.docker.internal:3306/boot-db?
+  config:
+    activate:
+      on-profile:
+        - docker
