@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.springBoot)
     alias(libs.plugins.springDependencyManagement)
+    alias(libs.plugins.dockerRemote)
     id 'java'
 }
 
@@ -29,6 +30,21 @@ dependencies {
     implementation project(':boot-api')
     implementation 'org.springframework.boot:spring-boot-starter-grpc-server'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.jar {
+    enabled = true
+    // Remove `plain` postfix from jar file
+    archiveClassifier.set("")
+}
+
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+
+task buildDockerImage(type: DockerBuildImage) {
+    dependsOn 'bootJar'
+    dockerFile = file('Dockerfile')
+    inputDir  = file('.')
+    images.add("${project.name}:${project.version}")
 }
 
 tasks.named('test') {
