@@ -62,4 +62,4 @@ management:
   otlp:
     metrics:
       export:
-        enabled: false
+        enabled: true
