@@ -23,4 +23,12 @@
 ## 运行grpc client
 `.\gradlew.bat :boot-web:bootRun`
 
+## 端口
+
+| 应用 | 端口 | 说明|
+|------|------|-----|
+|boot-db|9090 |gRPC服务端|
+|boot-web|8080|gRPC客户端|
+|grafana|3000|[grafana首页](http://localhost:3000/)|
+|prometheus|9000|[指标查询](http://localhost:9000/query)|
 
