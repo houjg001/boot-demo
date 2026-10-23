@@ -1,10 +1,11 @@
 # 系统环境
 * jdk25
 * docker
+## 切换分支
+`git switch ob`
 
-### 数据库准备
-**启动mysql容器**  
-`docker compose up mysql-9 -d`
+## 启动容器
+`docker compose up -d`
 
 ## 项目编译
 `.\gradlew.bat clean build -x test`
