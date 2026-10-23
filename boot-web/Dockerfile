@@ -20,8 +20,8 @@ ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # ---------- 创建非 root 用户（安全基线） ----------
-# 固定 UID/GID = 1001，避免与宿主机挂载卷权限冲突
-RUN addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
+# 固定 UID/GID = 10001，避免与宿主机挂载卷权限冲突
+RUN addgroup -g 10001 appgroup && adduser -u 10001 -G appgroup -s /bin/sh -D appuser
 
 WORKDIR /application
 
@@ -48,4 +48,4 @@ EXPOSE 8080
 # This jar only contains application code and references to the extracted jar files
 # This layout is efficient to start up and AOT cache friendly
 #ENTRYPOINT ["java", "-XX:AOTCache=app.aot", "-jar", "application.jar"]
-ENTRYPOINT ["java", "-jar", "application.jar"]
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=docker","application.jar"]

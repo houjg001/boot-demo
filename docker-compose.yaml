@@ -18,20 +18,12 @@ services:
   boot-db:
     image: boot-db:0.0.1-SNAPSHOT
     container_name: boot-db
-    environment:
-      TZ: "Asia/Shanghai"
-      SPRING_PROFILES_ACTIVE: docker
-
     ports:
       - "9090:9090"
 
   boot-web:
     image: boot-web:0.0.1-SNAPSHOT
     container_name: boot-web
-    environment:
-      TZ: "Asia/Shanghai"
-      SPRING_PROFILES_ACTIVE: docker
-
     ports:
       - "8080:8080"
 

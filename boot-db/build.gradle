@@ -32,12 +32,6 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-tasks.jar {
-    enabled = true
-    // Remove `plain` postfix from jar file
-    archiveClassifier.set("")
-}
-
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 
 task buildDockerImage(type: DockerBuildImage) {
