@@ -1,9 +1,23 @@
-server.port: 8088
-
-spring.grpc.client.channel.default.target: static://host.docker.internal:8090
+server.port: 8080
 spring:
   application:
     name: boot-web
+  grpc:
+    client:
+      channel:
+        default:
+          target: static://localhost:9090
+          ssl:
+            bundle: grpc-client
+  ssl:
+    bundle:
+      pem:
+        grpc-client:
+          keystore:
+            certificate: classpath:certs/client-cert.pem
+            private-key: classpath:certs/client-key-pkcs8.pem
+          truststore:
+            certificate: classpath:certs/ca-cert.pem
 
 ---
 
