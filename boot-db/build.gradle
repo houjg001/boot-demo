@@ -21,10 +21,9 @@ dependencies {
     implementation project(':boot-api')
     implementation(libs.mybatis)
     implementation(libs.pagehelper)
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
     annotationProcessor(libs.mapStructProcessor)
-//    implementation 'org.springframework.boot:spring-boot-h2console'
-//    runtimeOnly 'com.h2database:h2'
-    implementation 'org.springframework.boot:spring-boot-starter-jackson'
     implementation 'org.springframework.boot:spring-boot-starter-aspectj'
     implementation 'org.springframework.boot:spring-boot-starter-kafka'
     implementation 'org.springframework.boot:spring-boot-starter-grpc-server'

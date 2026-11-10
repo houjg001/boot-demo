@@ -28,6 +28,7 @@ def grpcJavaVersion = dependencyManagement.importedProperties['grpc-java.version
 dependencies {
     api(libs.mapStruct)
     annotationProcessor(libs.mapStructProcessor)
+    implementation 'org.springframework.boot:spring-boot-starter-jackson'
     implementation platform("org.springframework.grpc:spring-grpc-dependencies:${springGrpcDepVersion}")
     api('org.springframework.grpc:spring-grpc-core') {
         exclude group: 'org.springframework', module: 'spring-context'
