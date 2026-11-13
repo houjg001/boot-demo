@@ -1,13 +1,13 @@
 package org.example.demo.db.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class GanttTask {
     private Integer id;
 
     private String text;
 
-    private Date startDate;
+    private LocalDate startDate;
 
     private Integer duration;
 
@@ -17,9 +17,11 @@ public class GanttTask {
 
     private Integer parent;
 
+    private String type;
+
     private Boolean readonly;
 
-    private Boolean editable;
+    private Boolean delFlag;
 
     public Integer getId() {
         return id;
@@ -37,11 +39,11 @@ public class GanttTask {
         this.text = text;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
@@ -77,6 +79,14 @@ public class GanttTask {
         this.parent = parent;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public Boolean getReadonly() {
         return readonly;
     }
@@ -85,11 +95,11 @@ public class GanttTask {
         this.readonly = readonly;
     }
 
-    public Boolean getEditable() {
-        return editable;
+    public Boolean getDelFlag() {
+        return delFlag;
     }
 
-    public void setEditable(Boolean editable) {
-        this.editable = editable;
+    public void setDelFlag(Boolean delFlag) {
+        this.delFlag = delFlag;
     }
 }

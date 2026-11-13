@@ -8,4 +8,6 @@ import java.util.List;
 public interface GanttTaskService extends BaseService<GanttTask> {
 
     List<GanttTaskDto> queryGanttTasks();
+
+    Integer deleteGanttTaskById(Integer id);
 }

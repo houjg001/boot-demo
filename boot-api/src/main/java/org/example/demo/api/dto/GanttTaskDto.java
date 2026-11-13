@@ -2,6 +2,7 @@ package org.example.demo.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class GanttTaskDto {
@@ -10,10 +11,10 @@ public class GanttTaskDto {
     private String text;
     private Integer parent;
     @JsonProperty("start_date")
-    private Date startDate;
+    private LocalDate startDate;
     private Integer duration;
     private float progress;
-    private Boolean open;
+    private Boolean open = true;
     private String type;
 
     public Integer getId() {
@@ -40,11 +41,11 @@ public class GanttTaskDto {
         this.parent = parent;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 

@@ -39,11 +39,23 @@ public class GanttRestController {
     }
 
     @PutMapping("/task/{id}")
-    public Map<String, Object> update(@PathVariable Integer id, GanttTaskDto taskDto) {
+    public Map<String, Object> update(@PathVariable Integer id, @RequestBody GanttTaskDto taskDto) {
         taskDto.setId(id);
         GanttTask ganttTask = ganttTaskService.update(GanttTaskMapstruct.INSTANCE.dtoToEntity(taskDto));
         Map<String, Object> data = new HashMap<>();
         data.put("action", "updated");
+        return data;
+    }
+
+    @DeleteMapping("/task/{id}")
+    public Map<String, Object> delete(@PathVariable Integer id) {
+        Integer result = ganttTaskService.deleteGanttTaskById(id);
+        Map<String, Object> data = new HashMap<>();
+        if (result > 0) {
+            data.put("action", "deleted");
+        } else {
+            data.put("action", "failed");
+        }
         return data;
     }
 }

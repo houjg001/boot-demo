@@ -21,4 +21,10 @@ public class GanttTaskServiceImpl extends BaseServiceImpl<GanttTaskMapper, Gantt
         List<GanttTask> ganttTasks = ganttTaskMapper.queryGanttTasks();
         return GanttTaskMapstruct.INSTANCE.entityListToDtoList(ganttTasks);
     }
+
+    @Override
+    public Integer deleteGanttTaskById(Integer id) {
+        List<Integer> ids = ganttTaskMapper.queryChildrenTasksByParent(id);
+        return ganttTaskMapper.deleteGanttTaskById(ids);
+    }
 }

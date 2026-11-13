@@ -35,7 +35,7 @@
     gantt.config.cascade_delete = false;
     gantt.config.lightbox.sections = [
         {name:"description", height:38, map_to:"text", type:"textarea", focus:true},
-        {name: "type", type: "typeselect", map_to: "type"},                             /*!*/
+        {name: "type", type: "typeselect", map_to: "type"},/*!*/
         {name: "time", height: 72, type: "duration", map_to: "auto"}
     ];
 
@@ -69,8 +69,57 @@
     });
     const dp = gantt.createDataProcessor({
         url: "/api/gantt",
-        mode: "REST-JSON"
+        mode: "REST-JSON",
+        deleteAfterConfirmation: true
     });
+
+    gantt.attachEvent("onAfterTaskAdd", function(id,task){
+        cascadeUpdateParents(id);
+        return true;
+    });
+    gantt.attachEvent("onAfterTaskDrag", (id, mode, e) => {
+        cascadeUpdateParents(id);
+        return true;
+    });
+    gantt.attachEvent("onAfterTaskMove", function(id, parent, tindex){
+        cascadeUpdateParents(id);
+        return true;
+    });
+    gantt.attachEvent("onAfterTaskUpdate", function(id,task){
+        cascadeUpdateParents(id);
+        return true;
+    });
+    gantt.attachEvent("onAfterTaskDelete", function(id,task){
+        if (task.parent ==0) {
+            return;
+        }
+        //更新父节点
+        var tasks = gantt.getChildren(task.parent);
+        if (!tasks || tasks.length==0) {
+            let p = gantt.getTask(task.parent);
+            p.type = 'task';
+            gantt.updateTask(p.id);
+        }
+        return true;
+    });
+
+    function cascadeUpdateParents(leafTaskId) {
+        //获取所有的父任务
+        let parentTasks;
+        parentTasks = new Set();
+        gantt.eachParent(function(task){
+            parentTasks.add(task);
+        }, leafTaskId);
+
+        gantt.batchUpdate(function () {
+            for(let task of parentTasks){
+                task.type = 'project';
+                gantt.updateTask(task.id);
+                // alert(JSON.stringify(task));
+            }
+        });
+    }
+
 
 </script>
 </body>

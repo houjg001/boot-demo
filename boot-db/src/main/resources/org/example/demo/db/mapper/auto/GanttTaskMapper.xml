@@ -4,16 +4,17 @@
   <resultMap id="BaseResultMap" type="org.example.demo.db.entity.GanttTask">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="text" jdbcType="VARCHAR" property="text" />
-    <result column="start_date" jdbcType="TIMESTAMP" property="startDate" />
+    <result column="start_date" jdbcType="DATE" property="startDate" />
     <result column="duration" jdbcType="INTEGER" property="duration" />
     <result column="progress" jdbcType="REAL" property="progress" />
     <result column="sortorder" jdbcType="INTEGER" property="sortorder" />
     <result column="parent" jdbcType="INTEGER" property="parent" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
     <result column="readonly" jdbcType="BIT" property="readonly" />
-    <result column="editable" jdbcType="BIT" property="editable" />
+    <result column="del_flag" jdbcType="BIT" property="delFlag" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, text, start_date, duration, progress, sortorder, parent, readonly, editable
+    id, text, start_date, duration, progress, sortorder, parent, type, readonly, del_flag
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -31,10 +32,10 @@
     </selectKey>
     insert into t_gantt_tasks (text, start_date, duration, 
       progress, sortorder, parent, 
-      readonly, editable)
-    values (#{text,jdbcType=VARCHAR}, #{startDate,jdbcType=TIMESTAMP}, #{duration,jdbcType=INTEGER}, 
+      type, readonly, del_flag)
+    values (#{text,jdbcType=VARCHAR}, #{startDate,jdbcType=DATE}, #{duration,jdbcType=INTEGER}, 
       #{progress,jdbcType=REAL}, #{sortorder,jdbcType=INTEGER}, #{parent,jdbcType=INTEGER}, 
-      #{readonly,jdbcType=BIT}, #{editable,jdbcType=BIT})
+      #{type,jdbcType=VARCHAR}, #{readonly,jdbcType=BIT}, #{delFlag,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="org.example.demo.db.entity.GanttTask">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -60,11 +61,14 @@
       <if test="parent != null">
         parent,
       </if>
+      <if test="type != null">
+        type,
+      </if>
       <if test="readonly != null">
         readonly,
       </if>
-      <if test="editable != null">
-        editable,
+      <if test="delFlag != null">
+        del_flag,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -72,7 +76,7 @@
         #{text,jdbcType=VARCHAR},
       </if>
       <if test="startDate != null">
-        #{startDate,jdbcType=TIMESTAMP},
+        #{startDate,jdbcType=DATE},
       </if>
       <if test="duration != null">
         #{duration,jdbcType=INTEGER},
@@ -86,11 +90,14 @@
       <if test="parent != null">
         #{parent,jdbcType=INTEGER},
       </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
       <if test="readonly != null">
         #{readonly,jdbcType=BIT},
       </if>
-      <if test="editable != null">
-        #{editable,jdbcType=BIT},
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -101,7 +108,7 @@
         text = #{text,jdbcType=VARCHAR},
       </if>
       <if test="startDate != null">
-        start_date = #{startDate,jdbcType=TIMESTAMP},
+        start_date = #{startDate,jdbcType=DATE},
       </if>
       <if test="duration != null">
         duration = #{duration,jdbcType=INTEGER},
@@ -115,11 +122,14 @@
       <if test="parent != null">
         parent = #{parent,jdbcType=INTEGER},
       </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
       <if test="readonly != null">
         readonly = #{readonly,jdbcType=BIT},
       </if>
-      <if test="editable != null">
-        editable = #{editable,jdbcType=BIT},
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=BIT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -127,13 +137,14 @@
   <update id="updateByPrimaryKey" parameterType="org.example.demo.db.entity.GanttTask">
     update t_gantt_tasks
     set text = #{text,jdbcType=VARCHAR},
-      start_date = #{startDate,jdbcType=TIMESTAMP},
+      start_date = #{startDate,jdbcType=DATE},
       duration = #{duration,jdbcType=INTEGER},
       progress = #{progress,jdbcType=REAL},
       sortorder = #{sortorder,jdbcType=INTEGER},
       parent = #{parent,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
       readonly = #{readonly,jdbcType=BIT},
-      editable = #{editable,jdbcType=BIT}
+      del_flag = #{delFlag,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
