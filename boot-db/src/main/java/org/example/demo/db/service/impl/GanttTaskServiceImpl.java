@@ -3,6 +3,7 @@ package org.example.demo.db.service.impl;
 import org.example.demo.api.dto.GanttTaskDto;
 import org.example.demo.db.entity.GanttTask;
 import org.example.demo.db.mapper.GanttTaskMapper;
+import org.example.demo.db.service.GanttLinkService;
 import org.example.demo.db.service.GanttTaskService;
 import org.example.demo.db.utils.GanttTaskMapstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ public class GanttTaskServiceImpl extends BaseServiceImpl<GanttTaskMapper, Gantt
 
     @Autowired
     private GanttTaskMapper ganttTaskMapper;
+    @Autowired
+    private GanttLinkService ganttLinkService;
 
     @Override
     public List<GanttTaskDto> queryGanttTasks() {
@@ -25,6 +28,7 @@ public class GanttTaskServiceImpl extends BaseServiceImpl<GanttTaskMapper, Gantt
     @Override
     public Integer deleteGanttTaskById(Integer id) {
         List<Integer> ids = ganttTaskMapper.queryChildrenTasksByParent(id);
+        ganttLinkService.deleteGanttLinkByTaskId(ids);
         return ganttTaskMapper.deleteGanttTaskById(ids);
     }
 }

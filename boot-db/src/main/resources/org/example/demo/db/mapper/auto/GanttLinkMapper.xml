@@ -7,10 +7,10 @@
     <result column="target" jdbcType="INTEGER" property="target" />
     <result column="type" jdbcType="VARCHAR" property="type" />
     <result column="readonly" jdbcType="BIT" property="readonly" />
-    <result column="editable" jdbcType="BIT" property="editable" />
+    <result column="del_flag" jdbcType="BIT" property="delFlag" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, source, target, type, readonly, editable
+    id, source, target, type, readonly, del_flag
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -27,9 +27,9 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into t_gantt_links (source, target, type, 
-      readonly, editable)
+      readonly, del_flag)
     values (#{source,jdbcType=INTEGER}, #{target,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, 
-      #{readonly,jdbcType=BIT}, #{editable,jdbcType=BIT})
+      #{readonly,jdbcType=BIT}, #{delFlag,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="org.example.demo.db.entity.GanttLink">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -49,8 +49,8 @@
       <if test="readonly != null">
         readonly,
       </if>
-      <if test="editable != null">
-        editable,
+      <if test="delFlag != null">
+        del_flag,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -66,8 +66,8 @@
       <if test="readonly != null">
         #{readonly,jdbcType=BIT},
       </if>
-      <if test="editable != null">
-        #{editable,jdbcType=BIT},
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -86,8 +86,8 @@
       <if test="readonly != null">
         readonly = #{readonly,jdbcType=BIT},
       </if>
-      <if test="editable != null">
-        editable = #{editable,jdbcType=BIT},
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=BIT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -98,7 +98,7 @@
       target = #{target,jdbcType=INTEGER},
       type = #{type,jdbcType=VARCHAR},
       readonly = #{readonly,jdbcType=BIT},
-      editable = #{editable,jdbcType=BIT}
+      del_flag = #{delFlag,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -11,7 +11,7 @@ public class GanttLink {
 
     private Boolean readonly;
 
-    private Boolean editable;
+    private Boolean delFlag;
 
     public Integer getId() {
         return id;
@@ -53,11 +53,11 @@ public class GanttLink {
         this.readonly = readonly;
     }
 
-    public Boolean getEditable() {
-        return editable;
+    public Boolean getDelFlag() {
+        return delFlag;
     }
 
-    public void setEditable(Boolean editable) {
-        this.editable = editable;
+    public void setDelFlag(Boolean delFlag) {
+        this.delFlag = delFlag;
     }
 }

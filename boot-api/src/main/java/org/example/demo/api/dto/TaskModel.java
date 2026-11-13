@@ -1,15 +1,13 @@
 package org.example.demo.api.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.util.List;
 
+@Data
+@AllArgsConstructor
 public class TaskModel {
     private List<GanttTaskDto> tasks;
-
-    public List<GanttTaskDto> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<GanttTaskDto> tasks) {
-        this.tasks = tasks;
-    }
+    private List<GanttLinkDto> links;
 }

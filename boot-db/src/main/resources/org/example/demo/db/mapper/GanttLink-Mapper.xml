@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.demo.db.mapper.GanttLinkMapper">
+  <select id="queryGanttLinks" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_gantt_links where del_flag=0
+  </select>
+
+  <update id="deleteGanttLinkByTaskId" parameterType="java.lang.Integer">
+    update t_gantt_links set del_flag = 1
+    where source in
+    <foreach collection='taskIds' item='id' open='(' separator=',' close=')'>
+      #{id}
+    </foreach>
+    or target in
+    <foreach collection='taskIds' item='id' open='(' separator=',' close=')'>
+      #{id}
+    </foreach>
+  </update>
+
+</mapper>
