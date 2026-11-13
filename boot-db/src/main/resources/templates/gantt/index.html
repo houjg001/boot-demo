@@ -98,8 +98,8 @@
         if (!tasks || tasks.length==0) {
             let p = gantt.getTask(task.parent);
             p.type = 'task';
-            gantt.updateTask(p.id);
         }
+        gantt.updateTask(task.parent);
         return true;
     });
 
