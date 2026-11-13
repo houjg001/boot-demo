@@ -3,13 +3,13 @@ package org.example.demo.api.dto;
 import java.util.List;
 
 public class TaskModel {
-    private List<TaskDto> tasks;
+    private List<GanttTaskDto> tasks;
 
-    public List<TaskDto> getTasks() {
+    public List<GanttTaskDto> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<TaskDto> tasks) {
+    public void setTasks(List<GanttTaskDto> tasks) {
         this.tasks = tasks;
     }
 }

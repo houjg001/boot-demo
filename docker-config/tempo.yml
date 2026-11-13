@@ -10,12 +10,12 @@ distributor:
         http:
           endpoint: 0.0.0.0:4318
 
-ingester:
-  max_block_duration: 5m
-
-compactor:
-  compaction:
-    block_retention: 24h
+#ingester:
+#  max_block_duration: 5m
+#
+#compactor:
+#  compaction:
+#    block_retention: 24h
 
 storage:
   trace:

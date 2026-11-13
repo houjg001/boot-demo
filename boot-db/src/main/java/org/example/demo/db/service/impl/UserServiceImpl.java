@@ -19,7 +19,6 @@ import org.example.demo.db.utils.UserMapstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -35,8 +34,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     final UserMapper userMapper;
     final AddressMapper addressMapper;
     final UserAddressMapper userAddressMapper;
-    @Autowired
-    private KafkaTemplate<String, Object> kafkaTemplate;
     @Autowired
     private Gson gson;
 
@@ -91,11 +88,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         user.setEmail(userDto.getEmail());
         Integer result = userMapper.updateByPrimaryKeySelective(user);
         logger.info("用户更新结果:{}", result);
-        if (result > 0) {
-            UserUpdateEvent userUpdateEvent = new UserUpdateEvent(
-                    user.getUserId(), user.getUserName(), user.getEmail(), LocalDateTime.now());
-            kafkaTemplate.send("user-events", user.getUserId().toString(), userUpdateEvent);
-        }
         return result;
     }
 

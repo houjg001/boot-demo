@@ -3,29 +3,14 @@ server:
   port: 8088
 spring:
   datasource:
-#    url: jdbc:h2:file:~/testdb
-#    username: sa
-#    password: sa
-#    driverClassName: org.h2.Driver
+
     url: jdbc:mysql://localhost:3306/boot-db?
     username: boot
     password: boot
     driver-class-name: com.mysql.cj.jdbc.Driver
-  #  jpa:
-#    database-platform: org.hibernate.dialect.MySQLDialect
-#    show-sql: true
-#    database-platform: org.hibernate.dialect.H2Dialect
-#  h2:
-#    console:
-#      path: /h2-console
-#      enabled: true
-  kafka:
-    bootstrap-servers:
-      - localhost:9092
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JacksonJsonSerializer
 
+  thymeleaf:
+    cache: false
 mybatis:
   mapper-locations:
     - classpath*:/org/**/mapper/**/*.xml
@@ -35,32 +20,3 @@ mybatis:
 #    org.example.demo.db.mapper: debug
 #    org.springframework.boot: INFO
 #    org.springframework.transaction: DEBUG
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,metrics
-  tracing:
-    export:
-      enabled: true
-    sampling:
-      probability: 1.0
-
-  opentelemetry:
-    resource-attributes:
-      service.name: ${spring.application.name}
-      service.version: 1.0.0
-      deployment.environment: local
-    logging:
-      export:
-        otlp:
-          endpoint: http://localhost:4318/v1/logs
-    tracing:
-      export:
-        otlp:
-          endpoint: http://localhost:4318/v1/traces
-  otlp:
-    metrics:
-      export:
-        enabled: true

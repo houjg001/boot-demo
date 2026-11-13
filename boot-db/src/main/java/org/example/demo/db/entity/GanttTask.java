@@ -1,13 +1,13 @@
 package org.example.demo.db.entity;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
-public class GanttTasks {
+public class GanttTask {
     private Integer id;
 
     private String text;
 
-    private LocalDateTime startDate;
+    private Date startDate;
 
     private Integer duration;
 
@@ -37,11 +37,11 @@ public class GanttTasks {
         this.text = text;
     }
 
-    public LocalDateTime getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 

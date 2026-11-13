@@ -1,6 +1,6 @@
 package org.example.demo.db.entity;
 
-public class GanttLinks {
+public class GanttLink {
     private Integer id;
 
     private Integer source;

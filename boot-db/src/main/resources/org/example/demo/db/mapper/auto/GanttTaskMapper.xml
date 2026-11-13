@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.demo.db.mapper.GanttTaskMapper">
+  <resultMap id="BaseResultMap" type="org.example.demo.db.entity.GanttTask">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="text" jdbcType="VARCHAR" property="text" />
+    <result column="start_date" jdbcType="TIMESTAMP" property="startDate" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="progress" jdbcType="REAL" property="progress" />
+    <result column="sortorder" jdbcType="INTEGER" property="sortorder" />
+    <result column="parent" jdbcType="INTEGER" property="parent" />
+    <result column="readonly" jdbcType="BIT" property="readonly" />
+    <result column="editable" jdbcType="BIT" property="editable" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, text, start_date, duration, progress, sortorder, parent, readonly, editable
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_gantt_tasks
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_gantt_tasks
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.example.demo.db.entity.GanttTask">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_gantt_tasks (text, start_date, duration, 
+      progress, sortorder, parent, 
+      readonly, editable)
+    values (#{text,jdbcType=VARCHAR}, #{startDate,jdbcType=TIMESTAMP}, #{duration,jdbcType=INTEGER}, 
+      #{progress,jdbcType=REAL}, #{sortorder,jdbcType=INTEGER}, #{parent,jdbcType=INTEGER}, 
+      #{readonly,jdbcType=BIT}, #{editable,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="org.example.demo.db.entity.GanttTask">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_gantt_tasks
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="text != null">
+        text,
+      </if>
+      <if test="startDate != null">
+        start_date,
+      </if>
+      <if test="duration != null">
+        duration,
+      </if>
+      <if test="progress != null">
+        progress,
+      </if>
+      <if test="sortorder != null">
+        sortorder,
+      </if>
+      <if test="parent != null">
+        parent,
+      </if>
+      <if test="readonly != null">
+        readonly,
+      </if>
+      <if test="editable != null">
+        editable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="text != null">
+        #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null">
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="duration != null">
+        #{duration,jdbcType=INTEGER},
+      </if>
+      <if test="progress != null">
+        #{progress,jdbcType=REAL},
+      </if>
+      <if test="sortorder != null">
+        #{sortorder,jdbcType=INTEGER},
+      </if>
+      <if test="parent != null">
+        #{parent,jdbcType=INTEGER},
+      </if>
+      <if test="readonly != null">
+        #{readonly,jdbcType=BIT},
+      </if>
+      <if test="editable != null">
+        #{editable,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.example.demo.db.entity.GanttTask">
+    update t_gantt_tasks
+    <set>
+      <if test="text != null">
+        text = #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null">
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="duration != null">
+        duration = #{duration,jdbcType=INTEGER},
+      </if>
+      <if test="progress != null">
+        progress = #{progress,jdbcType=REAL},
+      </if>
+      <if test="sortorder != null">
+        sortorder = #{sortorder,jdbcType=INTEGER},
+      </if>
+      <if test="parent != null">
+        parent = #{parent,jdbcType=INTEGER},
+      </if>
+      <if test="readonly != null">
+        readonly = #{readonly,jdbcType=BIT},
+      </if>
+      <if test="editable != null">
+        editable = #{editable,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.example.demo.db.entity.GanttTask">
+    update t_gantt_tasks
+    set text = #{text,jdbcType=VARCHAR},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      duration = #{duration,jdbcType=INTEGER},
+      progress = #{progress,jdbcType=REAL},
+      sortorder = #{sortorder,jdbcType=INTEGER},
+      parent = #{parent,jdbcType=INTEGER},
+      readonly = #{readonly,jdbcType=BIT},
+      editable = #{editable,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

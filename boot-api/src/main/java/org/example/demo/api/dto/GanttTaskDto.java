@@ -1,15 +1,14 @@
 package org.example.demo.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSerializeAs;
 
 import java.util.Date;
 
-public class TaskDto {
+public class GanttTaskDto {
 
-    private Long id;
+    private Integer id;
     private String text;
-    private Long parent;
+    private Integer parent;
     @JsonProperty("start_date")
     private Date startDate;
     private Integer duration;
@@ -17,11 +16,11 @@ public class TaskDto {
     private Boolean open;
     private String type;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -33,11 +32,11 @@ public class TaskDto {
         this.text = text;
     }
 
-    public Long getParent() {
+    public Integer getParent() {
         return parent;
     }
 
-    public void setParent(Long parent) {
+    public void setParent(Integer parent) {
         this.parent = parent;
     }
 

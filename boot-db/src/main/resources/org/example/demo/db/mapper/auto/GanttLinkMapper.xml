@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.demo.db.mapper.GanttLinkMapper">
+  <resultMap id="BaseResultMap" type="org.example.demo.db.entity.GanttLink">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="source" jdbcType="INTEGER" property="source" />
+    <result column="target" jdbcType="INTEGER" property="target" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="readonly" jdbcType="BIT" property="readonly" />
+    <result column="editable" jdbcType="BIT" property="editable" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, source, target, type, readonly, editable
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_gantt_links
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_gantt_links
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.example.demo.db.entity.GanttLink">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_gantt_links (source, target, type, 
+      readonly, editable)
+    values (#{source,jdbcType=INTEGER}, #{target,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, 
+      #{readonly,jdbcType=BIT}, #{editable,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="org.example.demo.db.entity.GanttLink">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_gantt_links
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="source != null">
+        source,
+      </if>
+      <if test="target != null">
+        target,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="readonly != null">
+        readonly,
+      </if>
+      <if test="editable != null">
+        editable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="source != null">
+        #{source,jdbcType=INTEGER},
+      </if>
+      <if test="target != null">
+        #{target,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="readonly != null">
+        #{readonly,jdbcType=BIT},
+      </if>
+      <if test="editable != null">
+        #{editable,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.example.demo.db.entity.GanttLink">
+    update t_gantt_links
+    <set>
+      <if test="source != null">
+        source = #{source,jdbcType=INTEGER},
+      </if>
+      <if test="target != null">
+        target = #{target,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="readonly != null">
+        readonly = #{readonly,jdbcType=BIT},
+      </if>
+      <if test="editable != null">
+        editable = #{editable,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.example.demo.db.entity.GanttLink">
+    update t_gantt_links
+    set source = #{source,jdbcType=INTEGER},
+      target = #{target,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      readonly = #{readonly,jdbcType=BIT},
+      editable = #{editable,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

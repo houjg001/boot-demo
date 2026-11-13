@@ -13,5 +13,6 @@ springDependencyManagement = { id = 'io.spring.dependency-management', version.r
 mybatis = { group = "org.mybatis.spring.boot", name = "mybatis-spring-boot-starter", version.ref = 'mybatis-version' }
 pagehelper = { group = 'com.github.pagehelper', name = 'pagehelper-spring-boot-starter', version = '4.1.1' }
 mapStruct = { group = 'org.mapstruct', name = 'mapstruct', version.ref = 'mapstruct-version' }
-mapStructProcessor = {group = 'org.mapstruct', name = 'mapstruct-processor', version.ref='mapstruct-version'}
-otelLogbackAppender = {group='io.opentelemetry.instrumentation', name= 'opentelemetry-logback-appender-1.0', version.ref='otel-logback-appender-version'}
+mapStructProcessor = { group = 'org.mapstruct', name = 'mapstruct-processor', version.ref = 'mapstruct-version' }
+otelLogbackAppender = { group = 'io.opentelemetry.instrumentation', name = 'opentelemetry-logback-appender-1.0', version.ref = 'otel-logback-appender-version' }
+lombok = { group = 'org.projectlombok', name = 'lombok', version = '1.18.42' }

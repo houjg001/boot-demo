@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>任务甘特图</title>
+    <link rel="stylesheet" th:href="@{/css/gantt/dhtmlxgantt-10.css}" type="text/css">
+    <script th:src="@{/js/gantt/dhtmlxgantt-10.js}"></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+            padding: 0px;
+            margin: 0px;
+            overflow: hidden;
+        }
+
+        .gantt_weekend {
+            background: rgba(0, 0, 0, .035);
+        }
+    </style>
+</head>
+<body>
+<div id="gantt_here" style='width:100%; height:70%;'></div>
+<script type="text/javascript">
+    gantt.plugins({tooltip: true});
+
+    gantt.config.date_format = "%Y-%m-%d";
+    gantt.config.task_date = "%Y-%m-%d";
+    gantt.config.server_utc = false;
+    // gantt.config.auto_types = true;
+    gantt.config.open_tree_initially = true;
+    gantt.config.grid_resize = true;
+    gantt.config.work_time = true;
+    gantt.config.row_height = 34;
+    gantt.config.bar_height = 22;
+    gantt.config.cascade_delete = false;
+    gantt.config.lightbox.sections = [
+        {name:"description", height:38, map_to:"text", type:"textarea", focus:true},
+        {name: "type", type: "typeselect", map_to: "type"},                             /*!*/
+        {name: "time", height: 72, type: "duration", map_to: "auto"}
+    ];
+
+    //设置发送到服务端日期格式
+    const dateToStr = gantt.date.date_to_str("%Y-%m-%d");
+    gantt.templates.format_date = (date) => dateToStr(date);
+
+    gantt.templates.tooltip_text = function (start, end, task) {
+        return "<div>任务:" + task.text + " id:" + task.id + "</div> <div>开始日期:" +
+            gantt.templates.tooltip_date_format(start) +
+            "</div> <div>结束日期:" + gantt.templates.tooltip_date_format(end) + "</div> ";
+    };
+    gantt.templates.timeline_cell_class = function (task, date) {
+        if (!gantt.isWorkTime({date, task})) {
+            return "gantt_weekend";
+        }
+    };
+
+    gantt.config.scale_height = 50;
+    gantt.config.scales = [
+        {unit: "month", step: 1, format: "%F %Y"},
+        {unit: "day", step: 1, format: "%d %D"}
+    ];
+
+    gantt.i18n.setLocale("cn")
+
+    gantt.init("gantt_here");
+    gantt.load("/api/gantt").then(function(xhr){
+        gantt.message("加载完成!!");
+        return;
+    });
+    const dp = gantt.createDataProcessor({
+        url: "/api/gantt",
+        mode: "REST-JSON"
+    });
+
+</script>
+</body>
+</html>

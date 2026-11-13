@@ -12,7 +12,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<
 
     @Override
     public T save(T t) {
-        baseMapper.insert(t);
+        baseMapper.insertSelective(t);
         return t;
     }
 

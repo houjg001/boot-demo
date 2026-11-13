@@ -24,12 +24,6 @@
         </encoder>
     </appender>
 
-    <appender name="OTEL" class="io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender">
-        <!--<captureMdcAttributes>traceId,spanId</captureMdcAttributes>
-        <captureKeyValuePairAttributes>true</captureKeyValuePairAttributes>
-        <captureLoggerContext>true</captureLoggerContext>-->
-    </appender>
-
     <appender name="FILE_ALL" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_HOME}/all_${APP_NAME}.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
